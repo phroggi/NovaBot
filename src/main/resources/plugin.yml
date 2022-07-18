@@ -1,0 +1,8 @@
+name: NovaBot
+version: "${projectVersion}"
+main: ${projectGroup}.NovaBot
+api-version: 1.19
+description: ${projectDescription}
+commands:
+  discord:
+    description: "Main command for NovaBot"

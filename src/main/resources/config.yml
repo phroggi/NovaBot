@@ -1,0 +1,28 @@
+link:
+  # Player is required to link their Discord to play.
+  whitelist: false
+  unlinkOnLeave: false
+  # If Players are allowed to unlink their discord to their minecraft set true.
+  # Admins should be allowed to unlink their accounts.
+  allow_unlink: false
+  # If there is no Link Role, leave on 0
+  linkRoleID: 0
+  expiry_time: 300
+
+database:
+  mongo:
+    connection_string: ""
+    database: ""
+
+messages:
+  link:
+    link:
+      - " "
+      - " "
+    unknown_command: "Unknown Command"
+    discord_link: "Join our discord here: "
+    generated_already: "You already have a code generated, try again later"
+    copy_clipboard: "Click to copy code to clipboard"
+
+bot:
+  token: ""

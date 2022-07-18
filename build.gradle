@@ -1,0 +1,91 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "io.freefair.lombok" version "6.5.0.2"
+}
+
+group = 'me.phrog.novabot'
+version = "1.0-${System.getenv("BUILD_NUMBER") ?: "SNAPSHOT"}"
+description = "A Plugin."
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT'
+    compileOnly 'org.jetbrains:annotations:23.0.0'
+
+
+    implementation("net.dv8tion:JDA:5.0.0-alpha.13") {
+        exclude module: 'opus-java'
+    }
+    implementation('org.mongodb:mongodb-driver-sync:4.6.1')
+
+    // Test Dependencies
+    testImplementation 'org.junit.platform:junit-platform-launcher:1.9.0-M1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.0-M1'
+    testImplementation 'com.github.seeseemelk:MockBukkit-v1.19:2.75.0'
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
+}
+
+processResources {
+    filteringCharset 'UTF-8'
+    filesMatching(["**plugin.yml"]) {
+        expand (
+            projectName: rootProject.name,
+            projectVersion: project.version,
+            projectGroup: project.group,
+            projectDescription: project.description
+        )
+    }
+}
+
+
+shadowJar {
+
+    archiveClassifier.set('')
+
+    relocate("org.mongodb", "shaded.org.mongodb")
+    relocate("net.dv8tion", "shaded.net.dv8tion")
+
+    archiveName("${rootProject.name}-${project.version}.jar")
+    minimize()
+}
+
+artifacts {
+    archives shadowJar
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
