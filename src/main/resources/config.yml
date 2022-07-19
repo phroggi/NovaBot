@@ -7,6 +7,7 @@ link:
   allow_unlink: false
   # If there is no Link Role, leave on 0
   linkRoleID: 0
+  guildID: 0
   expiry_time: 300
 
 database:

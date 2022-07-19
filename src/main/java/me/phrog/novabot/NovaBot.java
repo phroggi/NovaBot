@@ -34,8 +34,8 @@ public final class NovaBot extends JavaPlugin {
         // Plugin startup logic
         instance = this;
         long l = System.currentTimeMillis();
-        getLogger().info("\n[NovaBot] Initializing Plugin.");
-        getLogger().info("\n[NovaBot] Registering Events...");
+        getLogger().info("[NovaBot] Initializing Plugin.");
+        getLogger().info("[NovaBot] Registering Events...");
 
         new JoinEvent(this);
         new QuitEvent(this);
@@ -49,7 +49,7 @@ public final class NovaBot extends JavaPlugin {
         if (this.database.connect()) getLogger().info(String.format("Successfully connected to database!"));
         else this.getLogger().info("Failed to connect to database!");
 
-        getLogger().info("\n[NovaBot] Discord...");
+        getLogger().info("[NovaBot] Discord...");
         // Run Asynchronously 
         Bukkit.getScheduler().runTaskAsynchronously(this, () ->
             {

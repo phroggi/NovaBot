@@ -72,8 +72,8 @@ shadowJar {
 
     archiveClassifier.set('')
 
-    relocate("org.mongodb", "shaded.org.mongodb")
-    relocate("net.dv8tion", "shaded.net.dv8tion")
+    relocate("org.mongodb", "me.phrog.org.mongodb")
+    relocate("net.dv8tion", "me.phrog.net.dv8tion")
 
     archiveName("${rootProject.name}-${project.version}.jar")
     minimize()

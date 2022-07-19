@@ -40,7 +40,7 @@ public class DiscordCommandHandler extends ListenerAdapter {
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         switch(event.getName()) {
             case "link" -> new LinkCommand(event);
-            case "ll" -> new UnlinkCommand(event);
+            case "unlink" -> new UnlinkCommand(event);
         }
     }
 }
